@@ -1,0 +1,32 @@
+{
+  "name": "Twitter feed es6",
+  "version": "0.0.1",
+  "description": "Just a Kata with JavaScript",
+  "author": "",
+  "main": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "start": "karma start",
+    "test": "karma start --browsers Chrome"
+  },
+  "keywords": [
+    "tdd",
+    "kata",
+    "javascript"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine-core": "*",
+    "karma": "*",
+    "karma-jasmine": "*",
+    "karma-phantomjs-launcher": "*",
+    "karma-chrome-launcher": "*",
+    "karma-coffee-preprocessor": "*",
+    "karma-babel-preprocessor": "*",
+    "karma-spec-reporter": "*"
+  },
+  "private": true
+}
