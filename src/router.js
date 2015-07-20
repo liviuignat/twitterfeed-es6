@@ -1,4 +1,5 @@
 import Backbone from 'backbone';
+import FeedsView from 'components/feeds/feeds.view';
 
 class AppRouter extends Backbone.Router {
   constructor() {
@@ -12,6 +13,8 @@ class AppRouter extends Backbone.Router {
   }
 
   index() {
+    const view = new FeedsView();
+    view.render();
   }
 }
 

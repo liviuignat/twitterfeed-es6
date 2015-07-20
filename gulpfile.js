@@ -90,7 +90,7 @@ gulp.task('serve', ['styles'], function () {
 gulp.task('watch', ['serve'], function () {
   gulp.watch(jsPaths, ['lint', 'scripts']);
   gulp.watch(['src/**/*.less'], ['reload:styles']);
-  gulp.watch(['src/**/*.html', '!index.html'], ['templates']);
+  gulp.watch(['src/**/*.html', '!index.html'], ['reload']);
 });
 
 gulp.task('default', ['watch']);

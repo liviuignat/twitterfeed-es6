@@ -19,6 +19,7 @@ System.config({
     "core-js": "npm:core-js@0.9.18",
     "jquery": "github:components/jquery@2.1.4",
     "text": "github:systemjs/plugin-text@0.0.2",
+    "underscore": "npm:underscore@1.8.3",
     "github:jspm/nodelibs-process@0.1.1": {
       "process": "npm:process@0.10.1"
     },

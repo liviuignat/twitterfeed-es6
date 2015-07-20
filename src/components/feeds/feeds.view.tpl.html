@@ -1,0 +1,9 @@
+<ul class="FeedsList">
+  <% _.each(model, function (feed) { %>
+  <li class="FeedItem">
+    <div class="FeedCreatedAt"><%= feed.createdAt %></div>
+    <div class="FeedText"><%= feed.text %></div>
+    <div class="FeedLink"><%= feed.link %></div>
+  </li>
+  <% }); %>
+</ul>
