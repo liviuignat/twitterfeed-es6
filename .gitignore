@@ -1,2 +1,4 @@
 node_modules/
-bower/
+src/jspm_packages
+.tmp/
+npm-debug.log

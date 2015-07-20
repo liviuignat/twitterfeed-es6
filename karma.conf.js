@@ -1,52 +1,30 @@
-module.exports = function(config) {
-  'use strict';
+'use strict';
+
+module.exports = function (config) {
 
   config.set({
-    basePath: '',
-    frameworks: ['jasmine'],
-    files: [
-      'test/phantom-polyfill.js',
-      'test/jasmine-aliases.js',
-      'node_modules/karma-babel-preprocessor/node_modules/babel-core/browser-polyfill.js',
-      'src/**/*.js',
-      'test/**/*.js'
-    ],
+    basePath: 'src',
+    frameworks: ['jspm', 'jasmine', 'phantomjs-shim'],
+    jspm: {
+      config: 'config.js',
+      serveFiles: ['**/*'],
+      loadFiles: ['polyfills.js', '**/*.spec.js']
+    },
     exclude: [],
+    preprocessors: {},
     reporters: ['spec'],
+    specReporter: {
+      suppressPassed: true,
+      suppressFailed: false,
+      suppressSkipped: false
+    },
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['PhantomJS'],
-    captureTimeout: 60000,
     singleRun: false,
-
-    preprocessors: {
-      'src/**/*.js': ['babel'],
-      'test/**/*.js': ['babel'],
-      'src/**/*.coffee': ['coffee'],
-      'test/**/*.coffee': ['coffee']
-    },
-
-    'babelPreprocessor': {
-      options: {
-        sourceMap: 'inline'
-      },
-      filename: function(file) {
-        return file.originalPath.replace(/\.js$/, '.es5.js');
-      },
-      sourceFileName: function(file) {
-        return file.originalPath;
-      }
-    },
-
-    'coffeePreprocessor': {
-      options: {
-        sourceMap: true
-      },
-      transformPath: function(path) {
-        return path.replace(/\.coffee$/, '.js');
-      }
-    }
+    browserNoActivityTimeout: 25000
   });
+
 };
