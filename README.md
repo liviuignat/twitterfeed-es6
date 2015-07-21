@@ -8,8 +8,8 @@ https://github.com/liviuignat/twitterfeed-server
 Client dependecies are managed with jspm (http://jspm.io/). Run the commands with administrator rights in the exact order as below:
 
 ```
-jspm registry config github //add your github credentials
 npm install -g gulp jspm
+jspm registry config github //add your github credentials
 npm install
 jspm install
 ```
