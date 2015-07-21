@@ -14,10 +14,13 @@ class FeedView extends Backbone.View {
   }
 
   className() {
-    return 'body > section';
+    return 'FeedsView';
   }
 
   render() {
+    this.$el.html('<div class="LoadingIndicator">Loading please wait ...</div>');
+    $('.PageContent').html(this.$el);
+
     return this.feedService.getFeeds().then((feeds) => {
       const models = feeds.map((json) => {
         const model = new FeedModel(json);
@@ -27,8 +30,6 @@ class FeedView extends Backbone.View {
       this.collection.reset(models);
 
       this.$el.html(this.template());
-
-      $(this.className()).html(this.$el);
 
       return this;
     });

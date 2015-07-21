@@ -1,5 +1,6 @@
 import Backbone from 'backbone';
 import FeedsView from 'components/feeds/feeds.view';
+import LayoutView from 'components/layout/layout.view';
 
 class AppRouter extends Backbone.Router {
   constructor() {
@@ -8,7 +9,8 @@ class AppRouter extends Backbone.Router {
 
   routes() {
     return {
-      '': 'index'
+      '': 'index',
+      'layout': 'layout'
     };
   }
 
@@ -16,6 +18,12 @@ class AppRouter extends Backbone.Router {
     const view = new FeedsView();
     view.render();
   }
+
+  layout() {
+    const view = new LayoutView();
+    view.render();
+  }
 }
 
 export default AppRouter;
+

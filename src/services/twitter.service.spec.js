@@ -1,3 +1,8 @@
+/*
+  Integration test.
+  This test will make the request to the server and test if the request is successful
+*/
+
 import twitterService from 'services/twitter.service';
 
 describe('when getting twitter feeds', () => {

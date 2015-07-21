@@ -9,7 +9,7 @@ function getFeeds() {
         id: model.id,
         userId: model.user.id,
         userName: model.user.name,
-        createdAt: model.created_at,
+        createdAt: new Date(model.created_at),
         text: model.text,
         link: model.source,
         retweetCount: model.retweet_count,
