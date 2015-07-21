@@ -27,7 +27,7 @@ TODOs:
 - FlexBox is not IE9,8 compatible, replace with compatible CSS to handle the grid system
 
 Resources:
-http://jspm.io/
-https://babeljs.io/
-https://github.com/lukehoban/es6features
-http://benmccormick.org/2015/04/07/es6-classes-and-backbone-js/
+- http://jspm.io/
+- https://babeljs.io/
+- https://github.com/lukehoban/es6features
+- http://benmccormick.org/2015/04/07/es6-classes-and-backbone-js/
