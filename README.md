@@ -1,6 +1,6 @@
 Fetch feeds from twitter using es-next code. Some keywords: gulp, BrowserSync, Backbone, Karma, Jasmine, jquery, LESS, FlexBox, ES6, babel, jspm, nodejs
 
-Because twittwer does not support CORS, twitter queries are done through a nodejs server found here: http://twitter-cors.herokuapp.com/feed
+Because twittwer does not support CORS, twitter queries are done through a nodejs server which I developend and it's found here: http://twitter-cors.herokuapp.com/feed
 
 The source code for the server is found here:
 https://github.com/liviuignat/twitterfeed-server
