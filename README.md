@@ -1,4 +1,4 @@
-### Twitter Feed
+### Twitter Feed [![Build Status](https://travis-ci.org/liviuignat/twitterfeed-es6.svg?branch=master)](https://travis-ci.org/liviuignat/twitterfeed-es6)
 
 Fetch feeds from twitter using es-next code. Keywords: gulp, BrowserSync, Backbone, Karma, Jasmine, jquery, LESS, FlexBox, ES6, SystemJS, babel, jspm, nodejs
 
