@@ -21,6 +21,8 @@ Usefull commands to run the project:
 ```
 gulp
 gulp test
+gulp build //generates the production sources
+gulp serve:prod //run the application locally with production sources (faster load, test in prod mode)
 ```
 
 Structure: 

@@ -1,59 +1,46 @@
 'use strict';
 
-var url = require('url');
-var fs = require('fs');
-var path = require('path');
-var folder = path.resolve(__dirname, 'src');
 var gulp = require('gulp');
-var browserSync = require('browser-sync');
+var cached = require('gulp-cached');
+var sourcemaps = require('gulp-sourcemaps');
+var babel = require('gulp-babel');
+var htmlReplace = require('gulp-html-replace');
+var htmlmin = require('gulp-htmlmin');
 var $ = require('gulp-load-plugins')();
+var browserSync = require('browser-sync');
 var path = require('path');
-var fse = require('fs-extra');
+var rimraf = require('rimraf');
 var bundleLess = require('bundle-less');
 var runSequence = require('run-sequence');
 var karma = require('karma');
+var tools = require('require-dir')('build', {
+  camelcase: true
+});
 var jsPaths = ['src/**/*.js', '!src/config.js', '!src/jspm_packages/*.js', '!src/jspm_packages/**/*.js']
 
 var supportedBrowsers = ['last 3 versions', 'last 3 BlackBerry versions', 'last 3 Android versions'];
 
-var runKarma = function (config, done) {
-  karma.server.start(config, function (failedTests) {
-    done();
-  });
+var htmlminOptions = {
+  removeComments: true,
+  ignoreCustomComments: [/^\s*\/?ko/],
+  collapseWhitespace: true,
+  collapseBooleanAttributes: true,
+  removeAttributeQuotes: true,
+  useShortDoctype: true,
+  removeScriptTypeAttributes: true,
+  removeStyleLinkTypeAttributes: true,
+  removeOptionalTags: true,
+  caseSensitive: true
 };
 
-var compileLess = function (options) {
-  var inputFile = path.resolve(options.from);
-  var outputFile = path.resolve(options.to);
-  var less = fse.readFileSync(inputFile, 'utf-8');
-  return bundleLess(less, options).then(function (result) {
-    fse.ensureDirSync(path.dirname(outputFile));
-    fse.writeFileSync(outputFile + '.map', result.map, 'utf-8');
-    fse.writeFileSync(outputFile, result.css, 'utf-8');
+gulp.task('clean', function (done) {
+  ['.tmp', '.dist'].forEach(function (dir) {
+    rimraf.sync(dir, {
+      maxBusyTries: 5
+    });
   });
-};
-
-var startBrowserSync = function (baseDir) {
-  var defaultFile = 'index.html'
-
-  return browserSync({
-    server: {
-      baseDir: baseDir,
-      middleware: function(req, res, next) {
-        var fileName = url.parse(req.url);
-        fileName = fileName.href.split(fileName.search).join('');
-        var extension = path.extname(fileName);
-
-        if (!extension) {
-            req.url = '/' + defaultFile;
-        }
-        return next();
-      }
-    },
-    startPath: '/',
-    browser: 'default'
-  });
-};
+  done();
+});
 
 gulp.task('test', function (done) {
   var options = {
@@ -61,7 +48,7 @@ gulp.task('test', function (done) {
     singleRun: true,
     browsers: ['PhantomJS']
   };
-  runKarma(options, done);
+  tools.runKarma(options, done);
 });
 
 gulp.task('lint', function () {
@@ -84,7 +71,7 @@ gulp.task('scripts', ['reload'], function (done) {
 });
 
 gulp.task('styles', function (done) {
-  compileLess({
+  tools.compileLess({
     from: 'src/theme-reddiamond.less',
     to: '.tmp/theme-reddiamond.css',
     base: 'src',
@@ -97,7 +84,7 @@ gulp.task('styles', function (done) {
     }
   });
 
-  compileLess({
+  tools.compileLess({
     from: 'src/theme-default.less',
     to: '.tmp/theme-default.css',
     base: 'src',
@@ -112,7 +99,7 @@ gulp.task('styles', function (done) {
 });
 
 gulp.task('serve', ['styles'], function () {
-  startBrowserSync(['.tmp', 'src']);
+  tools.startBrowserSync(['.tmp', 'src']);
 });
 
 gulp.task('watch', ['serve'], function () {
@@ -122,3 +109,69 @@ gulp.task('watch', ['serve'], function () {
 });
 
 gulp.task('default', ['watch']);
+
+gulp.task('build:prod-scripts', function () {
+  return tools.bundleModules({
+    packagePath: '.',
+    rootModule: 'polyfills + app',
+    moduleMappings: {},
+    outputPath: '.dist/app.js',
+    base: 'src',
+    sourceRoot: '/sources/',
+    minify: true,
+    mangle: true,
+    htmlmin: htmlminOptions
+  });
+});
+
+gulp.task('build:prod-styles', function (done) {
+  tools.compileLess({
+    from: 'src/theme-reddiamond.less',
+    to: '.dist/theme-reddiamond.css',
+    base: 'src',
+    embedErrors: true,
+    csswring: {
+      removeAllComments: true
+    },
+    autoprefixer: {
+      browsers: supportedBrowsers
+    }
+  });
+
+  tools.compileLess({
+    from: 'src/theme-default.less',
+    to: '.dist/theme-default.css',
+    base: 'src',
+    embedErrors: true,
+    csswring: {
+      removeAllComments: true
+    },
+    autoprefixer: {
+      browsers: supportedBrowsers
+    }
+  }).then(done, done);
+});
+
+gulp.task('build:html', function () {
+  return gulp.src('src/index.html')
+    .pipe(htmlReplace({
+      css: {
+        src: '/theme-default.css',
+        tpl: '<link rel="stylesheet" href="%s">'
+      },
+      js: {
+        src: '/app.js',
+        tpl: '<script src="%s" defer></script>'
+      }
+    }))
+    .pipe(htmlmin(htmlminOptions))
+    .pipe(gulp.dest('.dist'));
+});
+
+gulp.task('build', function (done) {
+  runSequence('clean', 'test', ['build:prod-styles', 'build:prod-scripts', 'build:html'], done);
+});
+
+gulp.task('serve:prod', ['build'], function (done) {
+  tools.startBrowserSync(['.dist']);
+});

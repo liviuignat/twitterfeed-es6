@@ -31,7 +31,7 @@ describe('when the feeds view is initialized and render is invoked', () => {
     });
 
     it('should contain the error message template rendered in the view', () => {
-      expect(feedsView.$el.html()).toContain(errorMessageText);
+      expect(feedsView.$el.html()).toContain('class="ErrorMessage"');
     });
 
   });
