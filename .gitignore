@@ -1,5 +1,4 @@
 node_modules/
 src/jspm_packages
 .tmp/
-.dist/
 npm-debug.log

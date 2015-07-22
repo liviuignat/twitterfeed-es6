@@ -9,8 +9,7 @@
     "url": ""
   },
   "scripts": {
-    "start": "karma start",
-    "jspm:install": "jspm install",
+    "start": "node --harmony server.js",
     "test": "karma start --browsers Chrome"
   },
   "keywords": [
@@ -67,5 +66,11 @@
       "core-js": "npm:core-js@^0.9.4"
     }
   },
-  "dependencies": {}
+  "dependencies": {
+    "koa": "^0.21.0",
+    "koa-body-parser": "^1.1.2",
+    "koa-methodoverride": "^0.4.2",
+    "koa-router": "^5.1.2",
+    "koa-static": "^1.4.9"
+  }
 }
