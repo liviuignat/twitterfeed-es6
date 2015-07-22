@@ -57,6 +57,8 @@ Browser compatibility:
 TODOs:
 - FlexBox is not compatible with IE9,8  and has bugs also on other IE versions, replace with compatible CSS to handle the grid system
 
+Where is it published? It is published on Heroku, just follow this link: http://twitter-feeds.herokuapp.com/
+
 Resources:
 - http://jspm.io/
 - https://babeljs.io/
