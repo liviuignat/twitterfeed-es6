@@ -1,7 +1,6 @@
 import FeedsView from 'components/feeds/feeds.view';
 import underscoreFormatters from 'common/underscore.formatters';
 import feedService from 'services/twitter.service';
-import errorMessageText from 'components/feeds/feeds.view.error-message.tpl.html!text';
 
 describe('when the feeds view is initialized and render is invoked', () => {
   let feedsView;
