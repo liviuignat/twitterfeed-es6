@@ -6,6 +6,9 @@ var router = require('koa-router')();
 var path = require('path');
 var fs = require('fs');
 var util = require('util');
+var gzip = require('koa-gzip');
+var etag = require('koa-etag');
+var fresh = require('koa-fresh');
 
 var PORT = process.env.PORT || 8000;
 var app = koa();
@@ -30,7 +33,9 @@ app
   .use(router.allowedMethods())
   .use(bodyParser())
   .use(methodOverride())
-  .app.use(gzip());
+  .use(gzip())
+  .use(fresh())
+  .use(etag())
   .use(serveStatic(path.join(rootFolder, '.dist'), {
     maxage: 365 * 24 * 60 * 60 * 1000
   }));
