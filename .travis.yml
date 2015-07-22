@@ -1,19 +1,20 @@
 language: node_js
 node_js:
-  - 0.12
+- 0.12
+env:
+  global:
+    secure: wTqPjmwxBjvM77oAyUnVT8hmHzIpfeXAZeMdZe3tCHFh6f2lu8XAoqU+BwCKuRsMvJuBjXrbaPkzQX0Xm5QN3fNTKlnpA7ae49x3LoQqo6SbEjq56gj203QiqChTlfI5nKX9ff8v9bWjD8kcOgALsUk+UqBmgzD295APVa10+9SGuE+LC8D4+lAnthF19EhMVGCxCLMvcIZ2Qwqq1lijlIlUJROgndtQiyK/dgSNwZa56gNQStNnx380geVCGUonr9XQEKILbqiTe/RvH17nS+3oOi4kRWfSb+NRTL4yN2rL4WcsoUNmdkySP4hap8jSxwazQR2YB+mYFcr4BEDiws4VkREt+Bj8bUMw45s1N9pOtfv0zI+7R/D2PMiCBfKcP5o0u0Ki62Z6gW3VRvoAMn+rhGX/yfvZPUvEpy+9jGbirDE+B06PtsikSY0TtqMm5XUhKHgflKn6+1iAGVtAogVWWPrt63G0BJSgo+vV8ImtmN7leINk/c4d5xssiuoO0CGVrjt9xDEJkALTl2WpDz9enl3UOj7QTVL7SwsiJKpwBjSJwbmVS2PSmDXKYDIhM0ZRfrKLLYRehL48ebOBkaqYS5GARaImusxIOyH5MMyL6i1INpkKd5YIoCbsDDKaUOrMU1ecCpbyaA40Ed9kmfkUP9Kc7ApZ1A48MA2K18Q=
 
 before_script:
-  - "npm install -g gulp"
-  - "npm install -g jspm"
-  - "npm install -g karma"
-  - "npm install"
-  - "jspm registry export github"
-  - "jspm install"
-
+- npm install -g gulp
+- npm install -g karma
+- npm install
+- npm install -g jspm
+- jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
+- jspm install
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 script:
-  - sleep 5
-  - "./node_modules/.bin/karma start ./karma.conf.js --browsers Firefox --single-run"
+- sleep 5
+- "./node_modules/.bin/karma start ./karma.conf.js --browsers Firefox --single-run"
