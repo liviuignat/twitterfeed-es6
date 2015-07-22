@@ -16,7 +16,9 @@ function initThemeFromCache() {
 */
 function initTheme(themeName) {
   if (themeName) {
-    const url = '/theme-' + themeName + '.css';
+    var theme = themeName.toLowerCase();
+    var time = new Date().getTime();
+    const url = '/theme-' + theme + '.css?q=' + time;
     $(document).find('link[data-type="theme"]').attr('href', url);
   }
 }

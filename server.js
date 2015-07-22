@@ -30,6 +30,9 @@ app
   .use(router.allowedMethods())
   .use(bodyParser())
   .use(methodOverride())
+  .app.use(gzip());
+  .app.use(fresh());
+  .app.use(etag());
   .use(serveStatic(path.join(rootFolder, '.dist'), {
     maxage: 365 * 24 * 60 * 60 * 1000
   }));

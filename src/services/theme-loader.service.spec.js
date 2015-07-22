@@ -15,6 +15,6 @@ describe('when initializing theme', () => {
   it('should call jqury ajax', () => {
     const theme = $(document).find('link[data-type="theme"]').attr('href');
     const expectedUrl = '/theme-' + themeName + '.css';
-    expect(theme).toBe(expectedUrl);
+    expect(theme).toContain(expectedUrl);
   });
 });
