@@ -1,9 +1,21 @@
 <ul class="FeedsView-list">
   <% _.each(model, function (feed) { %>
   <li class="FeedsView-listItem">
-    <div class="FeedsView-createdAt"><%= _.template.formatDate(feed.createdAt) %></div>
-    <div class="FeedsView-tweetText"><%= feed.text %></div>
-    <div class="FeedsView-tweetLink"><%= feed.link %></div>
+
+    <div class="FeedsView-createdAt">
+      <div><%= _.template.formatDate(feed.createdAt) %></div>
+      <% if(feed.isRetweet) { %>
+        <div>by: <a href="https://twitter.com/<%= feed.originalScreenName %>" target="_blank"><%= feed.originalUserName %></a></div>
+      <% } %>
+    </div>
+
+    <div class="FeedsView-tweetText">
+      <%= feed.text %>
+    </div>
+
+    <div class="FeedsView-tweetLink">
+      <a href="<%= feed.link %>" target="_blank">read more</a>
+    </div>
   </li>
   <% }); %>
 </ul>

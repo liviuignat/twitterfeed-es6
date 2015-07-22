@@ -17,20 +17,41 @@ function getFeeds() {
     '&user_names=' + userNamesParam;
 
   return httpService.get(url).then((response) => {
-    return response.map((model) => {
-      return {
-        id: model.id,
-        userId: model.user.id,
-        userName: model.user.name,
-        createdAt: new Date(model.created_at_formatted),
-        text: model.text,
-        link: model.source,
-        retweetCount: model.retweet_count,
-        favoriteCount: model.favorite_count,
-        mentions: model.entities.user_mentions
-      };
+    return response.map((tweet) => {
+      return mapFeeds(tweet);
     });
   });
+}
+
+function mapFeeds(tweet) {
+  const model = {
+    id: tweet.id,
+    userId: tweet.user.id,
+    userName: tweet.user.name,
+    createdAt: new Date(tweet.created_at_formatted),
+    isRetweet: isRetweet(tweet),
+    text: tweet.text,
+    link: 'https://twitter.com/' + tweet.user.screen_name + '/status/' + tweet.id_str,
+    retweetCount: tweet.retweet_count,
+    favoriteCount: tweet.favorite_count,
+    mentions: tweet.entities.user_mentions
+  };
+
+  if (model.isRetweet) {
+    getRetweetUserInfo(model, tweet);
+  }
+
+  return model;
+}
+
+function isRetweet(tweet) {
+  return !!tweet.retweeted_status;
+}
+
+function getRetweetUserInfo(model, tweet) {
+  model.originalUserId = tweet.retweeted_status.user.id;
+  model.originalUserName = tweet.retweeted_status.user.name;
+  model.originalScreenName = tweet.retweeted_status.user.screen_name;
 }
 
 export default {
