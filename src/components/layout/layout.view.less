@@ -1,3 +1,54 @@
 .LayoutView {
   padding: @view-padding;
 }
+
+.LayoutView-row {
+  display: flex;
+  margin: 8px 0;
+  flex-direction: column;
+}
+
+.LayoutView-label {
+  flex: 1;
+}
+
+.LayoutView-input {
+  flex: 5;
+}
+
+.LayoutView-sortableList {
+  list-style-type: none;
+  margin: 10px 0 0 0 ;
+  padding: 0;
+  height: 30px;
+}
+
+.LayoutView-sortableItem {
+  display: inline;
+  background-color: #999;
+  margin: 0 3px 3px 3px;
+  padding: 4px;
+  font-size: 16px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.LayoutView-submitButton {
+  color: #fff;
+  cursor: pointer;
+  height: 32px;
+  margin-top: 7px;
+  margin-right: 0;
+  opacity: 1;
+  padding: 0 7px 0 8px;
+  background-color: #0084B4;
+  background: rgba(0,132,180,.8);
+  border: 1px solid transparent;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+  border-radius: 4px;
+}
+
+.ui-sortable-placeholder {
+  background-color: #AAA;
+  visibility: visible !important;
+}

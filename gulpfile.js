@@ -1,5 +1,9 @@
 'use strict';
 
+var url = require('url');
+var fs = require('fs');
+var path = require('path');
+var folder = path.resolve(__dirname, 'src');
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var $ = require('gulp-load-plugins')();
@@ -29,11 +33,22 @@ var compileLess = function (options) {
   });
 };
 
-var startBrowserSync = function (baseDir, middleware) {
+var startBrowserSync = function (baseDir) {
+  var defaultFile = 'index.html'
+
   return browserSync({
     server: {
       baseDir: baseDir,
-      middleware: middleware
+      middleware: function(req, res, next) {
+        var fileName = url.parse(req.url);
+        fileName = fileName.href.split(fileName.search).join('');
+        var extension = path.extname(fileName);
+
+        if (!extension) {
+            req.url = '/' + defaultFile;
+        }
+        return next();
+      }
     },
     startPath: '/',
     browser: 'default'
@@ -60,12 +75,12 @@ gulp.task('reload', function () {
   return browserSync.reload();
 });
 
-gulp.task('scripts', ['reload'], function (done) {
-  runSequence('lint', 'test', done);
+gulp.task('reload:styles', ['styles'], function () {
+  return browserSync.reload('*.css');
 });
 
-gulp.task('reload:styles', ['styles'], function () {
-  return browserSync.reload();
+gulp.task('scripts', ['reload'], function (done) {
+  runSequence('lint', 'test', done);
 });
 
 gulp.task('styles', function (done) {
@@ -84,7 +99,7 @@ gulp.task('styles', function (done) {
 });
 
 gulp.task('serve', ['styles'], function () {
-  startBrowserSync(['.tmp', 'src'], []);
+  startBrowserSync(['.tmp', 'src']);
 });
 
 gulp.task('watch', ['serve'], function () {

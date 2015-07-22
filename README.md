@@ -1,4 +1,6 @@
-Fetch feeds from twitter using es-next code. Some keywords: gulp, BrowserSync, Backbone, Karma, Jasmine, jquery, LESS, FlexBox, ES6, babel, jspm, nodejs
+### Twitter Feed
+
+Fetch feeds from twitter using es-next code. Keywords: gulp, BrowserSync, Backbone, Karma, Jasmine, jquery, LESS, FlexBox, ES6, SystemJS, babel, jspm, nodejs
 
 Because twittwer does not support CORS, twitter queries are done through a nodejs server which I developed and it's found here: http://twitter-cors.herokuapp.com/feed
 
@@ -20,6 +22,16 @@ Usefull commands to run the project:
 gulp
 gulp test
 ```
+
+Structure: 
+- Main folders are split in common, services, components and styles.
+- Each test file is in the same folder with the file that is being tested having *.spec.js sufix.
+- Each template file is in the same folder as the view having *.view.tmpl.html sufix.
+- Each *.less file is in the same folder as the view having *.view.less sufix.
+
+Styles:
+- Namings follow suit css, a standard for component style applications: https://suitcss.github.io/
+- Each component has each own .less file. They are combined in /styles/coponents.less. Variables are defined also in /styles/varibales.less
 
 TODOs:
 - create production build gulp task to generate ES5 js sources and minify JS, HTML.

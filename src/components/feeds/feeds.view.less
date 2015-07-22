@@ -10,24 +10,49 @@
 
 .FeedsView-listItem {
   padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+
+  @media only screen and (min-width: @screen-size-mobile){
+    flex-direction: row;
+  }
+}
+
+.FeedsView-listItem--firstColumn {
+  order: 1;
+}
+
+.FeedsView-listItem--secondColumn {
+  order: 2;
+}
+
+.FeedsView-listItem--thirdColumn {
+  order: 3;
 }
 
 .FeedsView-createdAt {
   color: @feed-date-color;
+  flex: 10;
 }
 
-.FeedsView-text {
+.FeedsView-tweetText {
   font-size: @feed-text-font-size;
   line-height: 18px;
-}
+  flex: 30;
 
-.FeedsView-link {
-  a {
-    color: #428bca;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
+  @media only screen and (min-width: @screen-size-tablet){
+    flex: 40;
+  }
+  @media only screen and (min-width: @screen-size-desktop){
+    flex: 50;
   }
 }
+
+.FeedsView-tweetLink {
+  flex: 10;
+
+  a {
+    .link();
+  }
+}
+

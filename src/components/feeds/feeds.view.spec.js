@@ -11,7 +11,17 @@ describe('when the feeds view is initialized and render is invoked', () => {
   beforeEach(function (done) {
     underscoreFormatters.init();
     feedsView = new FeedsView();
+
+    feedsView.layoutSettings = {
+      createdAtIndex: 0,
+      textIndex: 1,
+      linkIndex: 2,
+      themeName: 'default',
+      numberOfTweets: 30,
+      accontNames: '@AppDirect @techcrunch @laughingsquid'
+    };
     spyOn(feedsView.feedService, 'getFeeds').and.returnValue(Promise.resolve(feedArray));
+
     feedsView.render().then(done);
   });
 

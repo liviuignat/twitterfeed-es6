@@ -2,8 +2,8 @@
   <% _.each(model, function (feed) { %>
   <li class="FeedsView-listItem">
     <div class="FeedsView-createdAt"><%= _.template.formatDate(feed.createdAt) %></div>
-    <div class="FeedsView-text"><%= feed.text %></div>
-    <div class="FeedsView-link"><%= feed.link %></div>
+    <div class="FeedsView-tweetText"><%= feed.text %></div>
+    <div class="FeedsView-tweetLink"><%= feed.link %></div>
   </li>
   <% }); %>
 </ul>

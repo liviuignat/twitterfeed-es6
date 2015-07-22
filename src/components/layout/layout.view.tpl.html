@@ -1,1 +1,32 @@
-<div>layout page</div>
+<h4 class="LayoutView-title">layout page</h4>
+
+<form>
+  <div class="LayoutView-row">
+    <label class="LayoutView-label">Site theme</label>
+    <select class="LayoutView-input" name="themeName">
+      <option value="default" <%= model.themeName === 'default' ? 'selected' : '' %>>default</option>
+      <option value="RedDiamond" <%= model.themeName === 'RedDiamond' ? 'selected' : '' %>>Red Diamond</option>
+    </select>
+  </div>
+
+  <div class="LayoutView-row">
+    <label class="LayoutView-label">Number of tweets per user name</label>
+    <input class="LayoutView-input" type="number" name="numberOfTweets" value="<%= model.numberOfTweets%>"/>
+  </div>
+
+  <div class="LayoutView-row">
+    <label class="LayoutView-label">Twitter usernames</label>
+    <input class="LayoutView-input" name="accontNames" value="<%= model.accontNames%>"/>
+  </div>
+
+  <div class="LayoutView-row">
+    <label class="LayoutView-label">Order tweet columns by dragging and ropping columns below:</label>
+    <ul class="LayoutView-input LayoutView-sortableList">
+      <li class="LayoutView-sortableItem createdAt">Created at</li>
+      <li class="LayoutView-sortableItem tweetText">Tweet text</li>
+      <li class="LayoutView-sortableItem tweetLink">Tweet link</li>
+    </ul>
+  </div>
+
+  <button type="submit" class="LayoutView-submitButton">Save</button>
+</form>
