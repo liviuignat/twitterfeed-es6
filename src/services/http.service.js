@@ -1,11 +1,17 @@
 import $ from 'jquery';
 
 function get(url) {
+  $.support.cors = true;
+
   return new Promise((resolve, reject) => {
-    $.ajax(url).done((result) => {
-      resolve(result);
-    }).fail((err) => {
-      reject(err);
+    $.ajax({
+      url: url,
+      success: function (result) {
+        resolve(result);
+      },
+      error: function () {
+        reject(new Error('Error making the request'));
+      }
     });
   });
 }

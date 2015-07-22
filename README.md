@@ -41,9 +41,7 @@ Testing:
   - Run tests manually once with command: gulp test
 
 TODOs:
-- create production build gulp task to generate ES5 js sources and minify JS, HTML.
-- create output for HTML templates in a combined template cache
-- FlexBox is not IE9,8 compatible, replace with compatible CSS to handle the grid system
+- FlexBox is not IE9,8 compatible and has bugs also on other IE versions, replace with compatible CSS to handle the grid system
 
 Resources:
 - http://jspm.io/

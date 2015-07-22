@@ -153,14 +153,15 @@ gulp.task('build:prod-styles', function (done) {
 });
 
 gulp.task('build:html', function () {
+  var time = new Date().getTime();
   return gulp.src('src/index.html')
     .pipe(htmlReplace({
       css: {
-        src: '/theme-default.css',
-        tpl: '<link rel="stylesheet" href="%s">'
+        src: '/theme-default.css?q=' + time,
+        tpl: '<link rel="stylesheet" href="%s" data-type="theme">'
       },
       js: {
-        src: '/app.js',
+        src: '/app.js?q=' + time,
         tpl: '<script src="%s" defer></script>'
       }
     }))
