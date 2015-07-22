@@ -3,6 +3,7 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import FeedCollection from 'components/feeds/feed.collection';
 import FeedModel from 'components/feeds/feed.model';
+import LayoutModel from 'components/layout/layout.model';
 import templateText from 'components/feeds/feeds.view.tpl.html!text';
 import feedServiceInstance from 'services/twitter.service';
 import cacheServiceInstance from 'services/cache.service';
@@ -16,7 +17,7 @@ class FeedView extends Backbone.View {
     this.cacheService = cacheServiceInstance;
 
     this.collection = new FeedCollection();
-    this.layoutSettings = this.cacheService.get(CACHE_KEY);
+    this.layoutSettings = new LayoutModel(this.cacheService.get(CACHE_KEY)).toJSON();
     this.classMappings = ['firstColumn', 'secondColumn', 'thirdColumn'];
   }
 

@@ -4,16 +4,16 @@ import _ from 'underscore';
 import Backbone from 'backbone';
 import LayoutModel from 'components/layout/layout.model';
 import templateText from 'components/layout/layout.view.tpl.html!text';
-import cacheServiceInstance from 'services/cache.service';
+import cacheService from 'services/cache.service';
+import themeLoaderService from 'services/theme-loader.service';
 
 const CACHE_KEY = 'layout_settings';
 
 class LayoutView extends Backbone.View {
   constructor() {
     super();
-    this.cacheService = cacheServiceInstance;
 
-    const json = this.cacheService.get(CACHE_KEY);
+    const json = cacheService.get(CACHE_KEY);
     this.model = new LayoutModel(json);
   }
 
@@ -61,7 +61,8 @@ class LayoutView extends Backbone.View {
     this.updateColOrder();
 
     const json = this.model.toJSON();
-    this.cacheService.set(CACHE_KEY, json);
+    cacheService.set(CACHE_KEY, json);
+    themeLoaderService.initTheme(json.themeName);
   }
 
   updateColOrder() {

@@ -85,8 +85,21 @@ gulp.task('scripts', ['reload'], function (done) {
 
 gulp.task('styles', function (done) {
   compileLess({
-    from: 'src/main.less',
-    to: '.tmp/main.css',
+    from: 'src/theme-reddiamond.less',
+    to: '.tmp/theme-reddiamond.css',
+    base: 'src',
+    embedErrors: true,
+    csswring: {
+      removeAllComments: true
+    },
+    autoprefixer: {
+      browsers: supportedBrowsers
+    }
+  });
+
+  compileLess({
+    from: 'src/theme-default.less',
+    to: '.tmp/theme-default.css',
     base: 'src',
     embedErrors: true,
     csswring: {
