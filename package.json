@@ -4,6 +4,9 @@
   "description": "Just a Kata with JavaScript",
   "author": "",
   "main": "",
+  "engines": {
+    "node": "0.12.x"
+  },
   "repository": {
     "type": "git",
     "url": ""
