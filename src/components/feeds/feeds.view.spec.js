@@ -1,5 +1,6 @@
 import FeedsView from 'components/feeds/feeds.view';
 import underscoreFormatters from 'common/underscore.formatters';
+import feedService from 'services/twitter.service';
 
 describe('when the feeds view is initialized and render is invoked', () => {
   let feedsView;
@@ -20,7 +21,7 @@ describe('when the feeds view is initialized and render is invoked', () => {
       numberOfTweets: 30,
       accontNames: '@AppDirect @techcrunch @laughingsquid'
     };
-    spyOn(feedsView.feedService, 'getFeeds').and.returnValue(Promise.resolve(feedArray));
+    spyOn(feedService, 'getFeeds').and.returnValue(Promise.resolve(feedArray));
 
     feedsView.render().then(done);
   });
@@ -31,5 +32,43 @@ describe('when the feeds view is initialized and render is invoked', () => {
 
   it('should have the feeds rendered html in the view', () => {
     expect(feedsView.$el.html()).toContain(feedsView.collection.at(0).get('text'));
+  });
+
+  it('created date shoud be the first column', () => {
+    expect(feedsView.$el.find('.FeedsView-createdAt').hasClass('FeedsView-listItem--firstColumn')).toBe(true);
+  });
+
+  it('text shoud be the second column', () => {
+    expect(feedsView.$el.find('.FeedsView-tweetText').hasClass('FeedsView-listItem--secondColumn')).toBe(true);
+  });
+
+  it('link shoud be the third column', () => {
+    expect(feedsView.$el.find('.FeedsView-tweetLink').hasClass('FeedsView-listItem--thirdColumn')).toBe(true);
+  });
+
+  describe('When layout settings are changing', () => {
+    beforeEach(function (done) {
+      feedsView.layoutSettings = {
+        createdAtIndex: 2,
+        textIndex: 1,
+        linkIndex: 0,
+        themeName: 'default',
+        numberOfTweets: 30,
+        accontNames: '@AppDirect @techcrunch @laughingsquid'
+      };
+      feedsView.render().then(done);
+    });
+
+    it('created date shoud be the third column', () => {
+      expect(feedsView.$el.find('.FeedsView-createdAt').hasClass('FeedsView-listItem--thirdColumn')).toBe(true);
+    });
+
+    it('text shoud be the second column', () => {
+      expect(feedsView.$el.find('.FeedsView-tweetText').hasClass('FeedsView-listItem--secondColumn')).toBe(true);
+    });
+
+    it('link shoud be the first column', () => {
+      expect(feedsView.$el.find('.FeedsView-tweetLink').hasClass('FeedsView-listItem--firstColumn')).toBe(true);
+    });
   });
 });

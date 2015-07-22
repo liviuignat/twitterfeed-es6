@@ -3,6 +3,9 @@ import layoutSettingsService from 'services/layout-settings.service';
 
 const SERVICE_URL = 'http://twitter-cors.herokuapp.com/feed';
 
+/*
+  Loads the feeds. Takes into consideration the layout settings for feed count and user names.
+*/
 function getFeeds() {
   const layoutSettings = layoutSettingsService.getLayoutSettings();
   const userNamesParam = layoutSettings.accontNames
@@ -19,7 +22,7 @@ function getFeeds() {
         id: model.id,
         userId: model.user.id,
         userName: model.user.name,
-        createdAt: new Date(model.created_at),
+        createdAt: new Date(model.created_at_formatted),
         text: model.text,
         link: model.source,
         retweetCount: model.retweet_count,

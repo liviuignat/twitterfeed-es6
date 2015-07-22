@@ -3,21 +3,16 @@ import Backbone from 'backbone';
 import _ from 'underscore';
 import FeedCollection from 'components/feeds/feed.collection';
 import FeedModel from 'components/feeds/feed.model';
-import LayoutModel from 'components/layout/layout.model';
 import templateText from 'components/feeds/feeds.view.tpl.html!text';
-import feedServiceInstance from 'services/twitter.service';
-import cacheServiceInstance from 'services/cache.service';
-
-const CACHE_KEY = 'layout_settings';
+import feedService from 'services/twitter.service';
+import layoutSettingsService from 'services/layout-settings.service';
 
 class FeedView extends Backbone.View {
   constructor() {
     super();
-    this.feedService = feedServiceInstance;
-    this.cacheService = cacheServiceInstance;
 
     this.collection = new FeedCollection();
-    this.layoutSettings = new LayoutModel(this.cacheService.get(CACHE_KEY)).toJSON();
+    this.layoutSettings = layoutSettingsService.getLayoutSettings();
     this.classMappings = ['firstColumn', 'secondColumn', 'thirdColumn'];
   }
 
@@ -29,7 +24,7 @@ class FeedView extends Backbone.View {
     this.$el.html('<div class="LoadingIndicator">Loading please wait ...</div>');
     $('.PageContent').html(this.$el);
 
-    return this.feedService.getFeeds().then((feeds) => {
+    return feedService.getFeeds().then((feeds) => {
       const models = feeds.map((json) => {
         const model = new FeedModel(json);
         return model;
@@ -51,6 +46,10 @@ class FeedView extends Backbone.View {
     return html;
   }
 
+
+  /*
+    Restores order of the feed column settings from cache to UI
+  */
   restoreColOrder() {
     this.$el.find('.FeedsView-createdAt').addClass('FeedsView-listItem--' + this.classMappings[this.layoutSettings.createdAtIndex]);
     this.$el.find('.FeedsView-tweetText').addClass('FeedsView-listItem--' + this.classMappings[this.layoutSettings.textIndex]);

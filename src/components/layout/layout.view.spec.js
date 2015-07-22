@@ -1,15 +1,23 @@
 import LayoutView from 'components/layout/layout.view';
-import cacheServiceInstance from 'services/cache.service';
+import layoutSettingsService from 'services/layout-settings.service';
 
 describe('when the layout view is initialized', () => {
   let layoutView;
-  let spyCacheGet;
-  const CACHE_KEY = 'layout_settings';
+  let spyGet;
+  const modelJson = {
+    createdAtIndex: 2,
+    textIndex: 1,
+    linkIndex: 0,
+    themeName: 'default',
+    numberOfTweets: 30,
+    accontNames: '@AppDirect @techcrunch @laughingsquid'
+  };
 
   beforeEach(function (done) {
-    spyCacheGet = spyOn(cacheServiceInstance, 'get');
+    spyGet = spyOn(layoutSettingsService, 'getLayoutSettings');
 
     layoutView = new LayoutView();
+    layoutView.model.set(modelJson);
     layoutView.render().then(done);
   });
 
@@ -17,20 +25,35 @@ describe('when the layout view is initialized', () => {
     expect(layoutView.$el.html()).not.toBe('');
   });
 
-  it('should get the model from cache', () => {
-    expect(spyCacheGet).toHaveBeenCalledWith(CACHE_KEY);
+  it('should get the model from the theme loader', () => {
+    expect(spyGet).toHaveBeenCalled();
+  });
+
+  it('created date shoud be the third column', () => {
+    const index = layoutView.$sortableList.children().index(layoutView.$createdAt);
+    expect(index).toBe(2);
+  });
+
+  it('text shoud be the second column', () => {
+    const index = layoutView.$sortableList.children().index(layoutView.$tweetText);
+    expect(index).toBe(1);
+  });
+
+  it('link shoud be the first column', () => {
+    const index = layoutView.$sortableList.children().index(layoutView.$tweetLink);
+    expect(index).toBe(0);
   });
 
   describe('when form is saved', () => {
-    let spyCacheSet;
+    let spySet;
 
     beforeEach(function () {
-      spyCacheSet = spyOn(cacheServiceInstance, 'set');
+      spySet = spyOn(layoutSettingsService, 'saveLayoutSettings');
       layoutView.save();
     });
 
     it('should save data into the cache', () => {
-      expect(spyCacheSet).toHaveBeenCalledWith(CACHE_KEY, layoutView.model.toJSON());
+      expect(spySet).toHaveBeenCalledWith(layoutView.model.toJSON());
     });
   });
 });

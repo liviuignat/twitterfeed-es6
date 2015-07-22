@@ -1,5 +1,7 @@
-import $ from 'jquery';
+/* Disable linting. Referenced just so plugins are enabled. */
+/* eslint no-unused-vars: 0 */
 import ui from 'jquery-ui';
+import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
 import LayoutModel from 'components/layout/layout.model';
@@ -51,6 +53,9 @@ class LayoutView extends Backbone.View {
     return html;
   }
 
+  /*
+    Saves to cache after form is submitted
+  */
   save(evt) {
     if (evt) {
       evt.preventDefault();
@@ -63,6 +68,9 @@ class LayoutView extends Backbone.View {
     themeLoaderService.initTheme(json.themeName);
   }
 
+  /*
+    Updates order of the feed column settings from UI to model
+  */
   updateColOrder() {
     const createdAtIndex = this.$sortableList.children().index(this.$createdAt);
     const textIndex = this.$sortableList.children().index(this.$tweetText);
@@ -73,6 +81,9 @@ class LayoutView extends Backbone.View {
     this.model.set('linkIndex', linkIndex);
   }
 
+  /*
+    Restores order of the feed column settings from model to UI
+  */
   restoreColOrder() {
     const cols = [];
     cols[this.model.get('createdAtIndex')] = this.$createdAt;
@@ -86,6 +97,9 @@ class LayoutView extends Backbone.View {
     }
   }
 
+  /*
+    Generic on change event to save to model
+  */
   changed(evt) {
     const data = {};
     data[evt.currentTarget.name] = evt.currentTarget.value;

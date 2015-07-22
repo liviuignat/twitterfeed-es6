@@ -4,6 +4,7 @@
 
 .LayoutView-row {
   display: flex;
+  height: 50px;
   margin: 8px 0;
   flex-direction: column;
 }
@@ -13,7 +14,7 @@
 }
 
 .LayoutView-input {
-  flex: 5;
+  flex: 1;
 }
 
 .LayoutView-sortableList {
@@ -21,6 +22,7 @@
   margin: 10px 0 0 0 ;
   padding: 0;
   height: 30px;
+  width: 300px;
 }
 
 .LayoutView-sortableItem {
@@ -49,6 +51,7 @@
 }
 
 .ui-sortable-placeholder {
-  background-color: #AAA;
+  background-color: #BBB;
+  /* ugly hack to be able to see the placeholder of the drop area */
   visibility: visible !important;
 }
