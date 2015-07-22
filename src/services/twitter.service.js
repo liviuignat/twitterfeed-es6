@@ -1,9 +1,19 @@
 import httpService from 'services/http.service';
+import layoutSettingsService from 'services/layout-settings.service';
 
 const SERVICE_URL = 'http://twitter-cors.herokuapp.com/feed';
 
 function getFeeds() {
-  return httpService.get(SERVICE_URL).then((response) => {
+  const layoutSettings = layoutSettingsService.getLayoutSettings();
+  const userNamesParam = layoutSettings.accontNames
+    .replace(new RegExp(' ', 'g'), ',')
+    .replace(new RegExp('@', 'g'), '');
+
+  const url = SERVICE_URL +
+    '?count=' + layoutSettings.numberOfTweets +
+    '&user_names=' + userNamesParam;
+
+  return httpService.get(url).then((response) => {
     return response.map((model) => {
       return {
         id: model.id,

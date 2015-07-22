@@ -1,10 +1,8 @@
 import $ from 'jquery';
-import cacheService from 'services/cache.service';
-
-const CACHE_KEY = 'layout_settings';
+import layoutSettingsService from 'services/layout-settings.service';
 
 function initThemeFromCache() {
-  const layoutSettings = cacheService.get(CACHE_KEY);
+  const layoutSettings = layoutSettingsService.getLayoutSettings();
   if (layoutSettings && layoutSettings.themeName) {
     initTheme(layoutSettings.themeName);
   }
