@@ -19,10 +19,12 @@ jspm install
 Usefull commands to run the project: 
 
 ```
-gulp
-gulp test
-gulp build //generates the production sources
 gulp serve:prod //run the application locally with production sources (faster load, test in prod mode)
+gulp build      //generates the production sources (output in ./.dist)
+gulp            //run application in development mode with auto-reload features
+gulp test       //single test run
+gulp lint       //run JS linter
+
 ```
 
 Structure: 
@@ -32,20 +34,33 @@ Structure:
 - Each *.less file is in the same folder as the view having *.view.less suffix.
 
 Styles:
-- Namings follow suit css, a standard for component style applications: https://suitcss.github.io/
-- Each component has each own .less file. They are combined in /styles/coponents.less. Variables are defined also in /styles/varibales.less
+- Namings follow suit css, a naming convention for component style applications: https://suitcss.github.io/
+- Each component has each own *.less file. 
+- All components are combined in ./src/styles/components.less. 
+- Variables are defined also in ./src/styles/varibales.less
+- There are 2 main theme files ./src/theme-default.less and ./src/theme-reddiamond.less
+- Grid system is managed with FlexBox, because of simplicity. It is very known that IE support for FlexBox is very low.
 
 Testing:
-  - Testing framework used is jasmine
-  - Test are being ran in TravisCI also
-  - Run tests manually once with command: gulp test
+- Testing framework used is jasmine
+- Test are being ran in TravisCI also, see ./.travis.yml for configuration
+- Run tests manually once with command: ```gulp test```
+
+Build system:
+- Tasks are being ran with gulp
+- gulp default task will put an watch on all development files and auto-reload the browser 
+
+Browser compatibility:
+- CSS: Known issue - IE has limitted support for Flexbox.
+- JavaScript: running ```gulp serve:prod``` should prove support for IE9 and greater.
 
 TODOs:
-- FlexBox is not IE9,8 compatible and has bugs also on other IE versions, replace with compatible CSS to handle the grid system
+- FlexBox is not compatible with IE9,8  and has bugs also on other IE versions, replace with compatible CSS to handle the grid system
 
 Resources:
 - http://jspm.io/
 - https://babeljs.io/
+- https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 - https://github.com/lukehoban/es6features
 - http://benmccormick.org/2015/04/07/es6-classes-and-backbone-js/
 
