@@ -4,8 +4,11 @@ import _ from 'underscore';
 import FeedCollection from 'components/feeds/feed.collection';
 import FeedModel from 'components/feeds/feed.model';
 import templateText from 'components/feeds/feeds.view.tpl.html!text';
+import errorMessageText from 'components/feeds/feeds.view.error-message.tpl.html!text';
 import feedService from 'services/twitter.service';
 import layoutSettingsService from 'services/layout-settings.service';
+
+const loadingIndicator = '<div class="LoadingIndicator">Loading please wait ...</div>';
 
 class FeedView extends Backbone.View {
   constructor() {
@@ -21,7 +24,7 @@ class FeedView extends Backbone.View {
   }
 
   render() {
-    this.$el.html('<div class="LoadingIndicator">Loading please wait ...</div>');
+    this.$el.html(loadingIndicator);
     $('.PageContent').html(this.$el);
 
     return feedService.getFeeds().then((feeds) => {
@@ -37,6 +40,9 @@ class FeedView extends Backbone.View {
       this.restoreColOrder();
 
       return this;
+    }, () => {
+      this.collection.reset();
+      this.$el.html(errorMessageText);
     });
   }
 
@@ -45,7 +51,6 @@ class FeedView extends Backbone.View {
     const html = compiled({ model: this.collection.toJSON() });
     return html;
   }
-
 
   /*
     Restores order of the feed column settings from cache to UI
