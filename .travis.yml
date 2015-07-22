@@ -3,9 +3,12 @@ node_js:
   - 0.12
 
 before_script:
-  - "npm install -g gulp-cli"
+  - "npm install -g gulp"
+  - "npm install -g jspm"
   - "npm install -g karma"
   - "npm install"
+  - "jspm registry export github"
+  - "jspm install"
 
 before_install:
   - "export DISPLAY=:99.0"
