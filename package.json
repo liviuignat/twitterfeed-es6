@@ -9,8 +9,7 @@
     "url": ""
   },
   "scripts": {
-    "start": "node --harmony server.js",
-    "test": "karma start --browsers Chrome"
+    "start": "node --harmony server.js"
   },
   "keywords": [
     "tdd",
